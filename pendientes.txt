@@ -1,0 +1,1 @@
+Nota: Veo que ya existían algunos archivos previos (com.example.*, .idea/, .gradle/). Si quieres, puedo limpiar los residuos del template anterior (com/example/, keepRules/, etc.).
