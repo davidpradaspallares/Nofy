@@ -1,11 +1,17 @@
 package com.nofy.app
 
 import android.app.Application
+import com.nofy.app.notification.NotificationPersistenceManager
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
 class NofyApplication : Application() {
+
+    @Inject
+    lateinit var notificationPersistenceManager: NotificationPersistenceManager
+
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {

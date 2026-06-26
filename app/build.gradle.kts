@@ -48,12 +48,15 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":feature:home"))
+    implementation(project(":feature:registros"))
 
     implementation(libs.activity.compose)
     implementation(libs.compose.navigation)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.timber)
 }

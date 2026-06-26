@@ -4,10 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nofy.core.permisos.PermissionManager
-import com.nofy.core.service.notification.NotificationEventBus
-import com.nofy.core.service.notification.NotificationSimulator
-import com.nofy.core.service.notification.model.NotificationData
-import com.nofy.core.util.formatTimestampToDate
 import com.nofy.domain.usecase.GetHomeDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -15,15 +11,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getHomeDataUseCase: GetHomeDataUseCase,
-    private val notificationEventBus: NotificationEventBus,
-    private val notificationSimulator: NotificationSimulator,
     private val permissionManager: PermissionManager,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
@@ -31,11 +23,8 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeUiState(isLoading = true))
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    private val json = Json { prettyPrint = true }
-
     init {
         loadHomeData()
-        collectNotifications()
         checkNotificationListenerPermission()
     }
 
@@ -55,44 +44,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun collectNotifications() {
-        viewModelScope.launch {
-            notificationEventBus.notifications.collect { notification ->
-                val current = _uiState.value.notifications
-                _uiState.value = _uiState.value.copy(
-                    notifications = listOf(notification) + current
-                )
-            }
-        }
-    }
-
     fun checkNotificationListenerPermission() {
         val isEnabled = permissionManager.isNotificationListenerEnabled(context)
-        _uiState.value = _uiState.value.copy(isNotificationListenerEnabled = isEnabled)
+        _uiState.value = _uiState.value.copy(isServiceActive = isEnabled)
     }
 
-    fun openNotificationListenerSettings() {
-        permissionManager.openNotificationListenerSettings(context)
-    }
-
-    fun simulateNotification() {
-        viewModelScope.launch {
-            notificationSimulator.sendTestNotification()
+    fun onToggleService() {
+        if (!_uiState.value.isServiceActive) {
+            openNotificationListenerSettings()
         }
     }
 
-    fun showNotificationDetail(notification: NotificationData) {
-        val jsonString = json.encodeToString(notification)
-        _uiState.value = _uiState.value.copy(
-            selectedNotificationJson = jsonString,
-            selectedNotificationDate = formatTimestampToDate(notification.postTime),
-        )
-    }
-
-    fun dismissNotificationDetail() {
-        _uiState.value = _uiState.value.copy(
-            selectedNotificationJson = null,
-            selectedNotificationDate = null,
-        )
+    private fun openNotificationListenerSettings() {
+        permissionManager.openNotificationListenerSettings(context)
     }
 }

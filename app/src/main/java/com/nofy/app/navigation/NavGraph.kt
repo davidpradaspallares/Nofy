@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nofy.feature.home.HomeScreen
+import com.nofy.feature.registros.RegistrosScreen
 
 @Composable
 fun NofyNavHost() {
@@ -15,7 +16,12 @@ fun NofyNavHost() {
         startDestination = "home"
     ) {
         composable("home") {
-            HomeScreen()
+            HomeScreen(
+                onNavigateToRegistros = { navController.navigate("registros") }
+            )
+        }
+        composable("registros") {
+            RegistrosScreen()
         }
     }
 }
