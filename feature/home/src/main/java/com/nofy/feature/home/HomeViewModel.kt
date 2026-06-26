@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.nofy.core.permisos.PermissionManager
 import com.nofy.core.service.notification.NotificationEventBus
 import com.nofy.core.service.notification.NotificationSimulator
+import com.nofy.core.service.notification.model.NotificationData
+import com.nofy.core.util.formatTimestampToDate
 import com.nofy.domain.usecase.GetHomeDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -13,6 +15,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +30,8 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(HomeUiState(isLoading = true))
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+
+    private val json = Json { prettyPrint = true }
 
     init {
         loadHomeData()
@@ -73,5 +79,20 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             notificationSimulator.sendTestNotification()
         }
+    }
+
+    fun showNotificationDetail(notification: NotificationData) {
+        val jsonString = json.encodeToString(notification)
+        _uiState.value = _uiState.value.copy(
+            selectedNotificationJson = jsonString,
+            selectedNotificationDate = formatTimestampToDate(notification.postTime),
+        )
+    }
+
+    fun dismissNotificationDetail() {
+        _uiState.value = _uiState.value.copy(
+            selectedNotificationJson = null,
+            selectedNotificationDate = null,
+        )
     }
 }

@@ -1,6 +1,7 @@
 package com.nofy.feature.home
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,6 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.nofy.core.ui.components.NofyCard
 import com.nofy.core.ui.components.NotificationItem
+import com.nofy.core.ui.components.NotificationJsonDialog
 import com.nofy.core.ui.theme.TextPrimary
 import com.nofy.core.ui.theme.TextSecondary
 
@@ -146,9 +148,29 @@ fun HomeScreen(
                 }
             } else {
                 items(uiState.notifications, key = { "${it.packageName}_${it.postTime}" }) { notification ->
-                    NotificationItem(notification = notification)
+                    NotificationItem(
+                        notification = notification,
+                        onClick = { viewModel.showNotificationDetail(notification) }
+                    )
                 }
             }
+        }
+
+        val selectedJson = uiState.selectedNotificationJson
+        val selectedDate = uiState.selectedNotificationDate
+        if (selectedJson != null && selectedDate != null) {
+            NotificationJsonDialog(
+                json = selectedJson,
+                formattedDate = selectedDate,
+                onDismiss = { viewModel.dismissNotificationDetail() },
+                onShare = {
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, selectedJson)
+                    }
+                    context.startActivity(Intent.createChooser(intent, "Compartir notificación"))
+                }
+            )
         }
     }
 }

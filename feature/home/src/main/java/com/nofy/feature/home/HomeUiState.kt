@@ -8,4 +8,6 @@ data class HomeUiState(
     val description: String = "",
     val notifications: List<NotificationData> = emptyList(),
     val isNotificationListenerEnabled: Boolean = true,
+    val selectedNotificationJson: String? = null,
+    val selectedNotificationDate: String? = null,
 )
