@@ -39,6 +39,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -51,6 +52,8 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.compose.navigation)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 
     implementation(libs.timber)
 }
