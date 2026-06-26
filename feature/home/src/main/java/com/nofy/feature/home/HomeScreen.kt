@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Settings
@@ -50,6 +50,8 @@ private val InactiveRed = Color(0xFFE53935)
 @Composable
 fun HomeScreen(
     onNavigateToRegistros: () -> Unit = {},
+    onNavigateToAddGasto: () -> Unit = {},
+    onNavigateToConfiguracion: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -97,7 +99,7 @@ fun HomeScreen(
                     color = TextPrimary
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = { }) {
+                IconButton(onClick = onNavigateToConfiguracion) {
                     Icon(
                         imageVector = Icons.Default.Settings,
                         contentDescription = "Configuración",
@@ -132,13 +134,13 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            HomeActionButton(icon = Icons.Default.List, label = "VER REGISTROS", onClick = onNavigateToRegistros)
+            HomeActionButton(icon = Icons.AutoMirrored.Filled.List, label = "VER REGISTROS", onClick = onNavigateToRegistros)
             Spacer(modifier = Modifier.height(12.dp))
-            HomeActionButton(icon = Icons.Default.Remove, label = "AÑADIR GASTO", onClick = { })
+            HomeActionButton(icon = Icons.Default.Remove, label = "AÑADIR GASTO", onClick = onNavigateToAddGasto)
             Spacer(modifier = Modifier.height(12.dp))
             HomeActionButton(icon = Icons.Default.Add, label = "AÑADIR INGRESO", onClick = { })
             Spacer(modifier = Modifier.height(12.dp))
-            HomeActionButton(icon = Icons.Default.Place, label = "LUGARES DE PAGO", onClick = { })
+            HomeActionButton(icon = Icons.Default.Place, label = "LUGARES DE PAGO", onClick = onNavigateToConfiguracion)
         }
     }
 }

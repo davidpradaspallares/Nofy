@@ -49,6 +49,8 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":feature:home"))
     implementation(project(":feature:registros"))
+    implementation(project(":feature:gasto"))
+    implementation(project(":feature:configuracion"))
 
     implementation(libs.activity.compose)
     implementation(libs.compose.navigation)
