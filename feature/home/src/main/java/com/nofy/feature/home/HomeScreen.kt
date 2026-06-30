@@ -15,9 +15,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -25,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -141,7 +144,37 @@ fun HomeScreen(
             HomeActionButton(icon = Icons.Default.Add, label = "AÑADIR INGRESO", onClick = { })
             Spacer(modifier = Modifier.height(12.dp))
             HomeActionButton(icon = Icons.Default.Place, label = "LUGARES DE PAGO", onClick = onNavigateToConfiguracion)
+            Spacer(modifier = Modifier.height(12.dp))
+            HomeActionButton(icon = Icons.Default.Notifications, label = "NOTIFICACIÓN PRUEBA", onClick = { viewModel.onTestNotificationClick() })
         }
+    }
+
+    if (uiState.showTestNotificationDialog) {
+        AlertDialog(
+            onDismissRequest = { viewModel.onDismissTestNotification() },
+            title = {
+                Text(
+                    text = "Notificación de prueba",
+                    color = TextPrimary
+                )
+            },
+            text = {
+                Text(
+                    text = "Se enviará una notificación simulada de Google Wallet al móvil.",
+                    color = TextSecondary
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = { viewModel.onConfirmTestNotification() }) {
+                    Text("Sí, enviar")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { viewModel.onDismissTestNotification() }) {
+                    Text("Cancelar")
+                }
+            }
+        )
     }
 }
 

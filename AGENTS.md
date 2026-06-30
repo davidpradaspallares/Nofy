@@ -34,11 +34,27 @@ Android app built with Jetpack Compose, following MVVM architecture with multi-m
 Nofy/
 ├── app/                   # Punto de entrada, Application, MainActivity, NavGraph
 ├── core/                  # Lógica compartida: theme, componentes UI, DI, extensions
+│   ├── di/                #   DI (Hilt modules)
+│   ├── feature/
+│   │   └── notification/  #   Servicio de notificaciones, permisos, UI de notificación
+│   │       ├── model/     #     NotificationData
+│   │       ├── service/   #     NotificationReaderService, EventBus, Simulator
+│   │       ├── ui/        #     NotificationItem, NotificationJsonDialog
+│   │       └── permisos/  #     PermissionManager, PermissionState
+│   ├── ui/
+│   │   ├── components/    #   Componentes UI genéricos (NofyCard)
+│   │   └── theme/         #   Color, Theme, Typography
+│   └── util/              #   Utilidades (formatTimestampToDate)
 ├── data/                  # Capa de datos: Room, DAOs, repositorios
 ├── domain/                # Capa de dominio: modelos, interfaces de repositorio, use cases
 └── feature/               # Módulos de features (por feature)
-    └── home/              # Feature: Home
+    ├── home/              # Feature: Home (pantalla principal)
+    ├── configuracion/     # Feature: Configuración (CRUD categorías, lugares, tarjetas, entidades)
+    ├── gasto/             # Feature: Añadir Gasto (formulario)
+    └── registros/         # Feature: Registros (búsqueda de notificaciones con paginación)
 ```
+
+Para más detalle sobre cada feature (rutas, navegación, use cases, archivos), ver [`FEATURES.md`](FEATURES.md).
 
 ### Reglas de dependencia entre módulos
 

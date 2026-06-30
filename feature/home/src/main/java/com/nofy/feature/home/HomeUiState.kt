@@ -5,4 +5,5 @@ data class HomeUiState(
     val title: String = "",
     val description: String = "",
     val isServiceActive: Boolean = false,
+    val showTestNotificationDialog: Boolean = false,
 )
