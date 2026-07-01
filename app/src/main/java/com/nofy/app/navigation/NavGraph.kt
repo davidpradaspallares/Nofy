@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.nofy.feature.configuracion.ConfiguracionScreen
 import com.nofy.feature.gasto.AddGastoScreen
 import com.nofy.feature.home.HomeScreen
+import com.nofy.feature.ingreso.AddIngresoScreen
 import com.nofy.feature.plantillas.PlantillasScreen
 import com.nofy.feature.registros.RegistrosScreen
 
@@ -23,7 +24,8 @@ fun NofyNavHost() {
                 onNavigateToRegistros = { navController.navigate("registros") },
                 onNavigateToAddGasto = { navController.navigate("add_gasto") },
                 onNavigateToConfiguracion = { navController.navigate("configuracion") },
-                onNavigateToPlantillas = { navController.navigate("plantillas") }
+                onNavigateToPlantillas = { navController.navigate("plantillas") },
+                onNavigateToAddIngreso = { navController.navigate("add_ingreso") }
             )
         }
         composable("registros") {
@@ -41,6 +43,11 @@ fun NofyNavHost() {
         }
         composable("plantillas") {
             PlantillasScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable("add_ingreso") {
+            AddIngresoScreen(
                 onNavigateBack = { navController.popBackStack() }
             )
         }

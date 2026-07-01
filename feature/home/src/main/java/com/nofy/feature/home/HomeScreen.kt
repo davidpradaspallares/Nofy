@@ -57,6 +57,7 @@ fun HomeScreen(
     onNavigateToAddGasto: () -> Unit = {},
     onNavigateToConfiguracion: () -> Unit = {},
     onNavigateToPlantillas: () -> Unit = {},
+    onNavigateToAddIngreso: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -143,7 +144,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(12.dp))
             HomeActionButton(icon = Icons.Default.Remove, label = "AÑADIR GASTO", onClick = onNavigateToAddGasto)
             Spacer(modifier = Modifier.height(12.dp))
-            HomeActionButton(icon = Icons.Default.Add, label = "AÑADIR INGRESO", onClick = { })
+            HomeActionButton(icon = Icons.Default.Add, label = "AÑADIR INGRESO", onClick = onNavigateToAddIngreso)
             Spacer(modifier = Modifier.height(12.dp))
             HomeActionButton(icon = Icons.Default.Place, label = "LUGARES DE PAGO", onClick = onNavigateToConfiguracion)
             Spacer(modifier = Modifier.height(12.dp))
