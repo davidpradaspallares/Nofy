@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":feature:registros"))
     implementation(project(":feature:gasto"))
     implementation(project(":feature:configuracion"))
+    implementation(project(":feature:plantillas"))
 
     implementation(libs.activity.compose)
     implementation(libs.compose.navigation)

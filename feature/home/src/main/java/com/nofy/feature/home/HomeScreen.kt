@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.automirrored.filled.TextSnippet
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -55,6 +56,7 @@ fun HomeScreen(
     onNavigateToRegistros: () -> Unit = {},
     onNavigateToAddGasto: () -> Unit = {},
     onNavigateToConfiguracion: () -> Unit = {},
+    onNavigateToPlantillas: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -144,6 +146,8 @@ fun HomeScreen(
             HomeActionButton(icon = Icons.Default.Add, label = "AÑADIR INGRESO", onClick = { })
             Spacer(modifier = Modifier.height(12.dp))
             HomeActionButton(icon = Icons.Default.Place, label = "LUGARES DE PAGO", onClick = onNavigateToConfiguracion)
+            Spacer(modifier = Modifier.height(12.dp))
+            HomeActionButton(icon = Icons.AutoMirrored.Filled.TextSnippet, label = "PLANTILLAS", onClick = onNavigateToPlantillas)
             Spacer(modifier = Modifier.height(12.dp))
             HomeActionButton(icon = Icons.Default.Notifications, label = "NOTIFICACIÓN PRUEBA", onClick = { viewModel.onTestNotificationClick() })
         }
